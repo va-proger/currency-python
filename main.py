@@ -18,7 +18,7 @@ root.geometry('400x1000')
 root.title('Конвертер волют')
 # Меняем иконку окна
 root.iconbitmap(f'{Path.cwd()}/currency.ico')
-root.resizable(False, False)
+root.resizable(False, True)
 
 START_AMOUNT = 1
 
@@ -32,7 +32,7 @@ try:
     data = html.read()
     JSON_object = json.loads(data)
     currency = JSON_object['Valute']
-    print(currency)
+    # print(currency)
 except:
     messagebox.showerror("Error", "Ошибка получения курса валют")
     root.destroy()
@@ -53,27 +53,34 @@ h_buy.grid(row=0, column=1, sticky=EW)
 h_sale = Label(header_frame, text="Продажа", bg="#ccc", font="Arial 12 bold")
 h_sale.grid(row=0, column=2, sticky=EW)
 
+# Header Frame
+body_frame = Frame(root)
+body_frame.pack(fill=X)
+body_frame.grid_columnconfigure(0, weight=1)
+body_frame.grid_columnconfigure(1, weight=1)
+body_frame.grid_columnconfigure(2, weight=1)
 
 row = 1
 column = 0
 
 for cur in currency.items():
-    print(cur[1]['CharCode'], cur[1]['Value'], cur[1]['Nominal'])
+    # print(cur[1]['CharCode'], cur[1]['Value'], cur[1]['Nominal'])
+
     if column == 0:
-        Label(header_frame, text=cur[1]['CharCode'], font="Arial 10").grid(row=row, column=column, sticky=EW)
+        Label(body_frame, text=cur[1]['CharCode'], font="Arial 10").grid(row=row, column=column, sticky=EW)
         column += 1
     if column == 1:
-        Label(header_frame, text=cur[1]['Value'], font="Arial 10").grid(row=row, column=column, sticky=EW)
+        Label(body_frame, text=cur[1]['Value'], font="Arial 10").grid(row=row, column=column, sticky=EW)
         column += 1
     if column == 2:
-        Label(header_frame, text="-", font="Arial 10").grid(row=row, column=column, sticky=EW)
+        Label(body_frame, text="-", font="Arial 10").grid(row=row, column=column, sticky=EW)
         column += 1
     if column == 3:
         column = 0
         row += 1
-   # Label(header_frame, text="USD", font="Arial 10").grid(row=1, column=0, sticky=EW)
 
 
+# Label(header_frame, text="USD", font="Arial 10").grid(row=1, column=0, sticky=EW)
 # USD course
 #
 # usd_currency = Label(header_frame, text="USD", font="Arial 10")
@@ -116,10 +123,10 @@ for cur in currency.items():
 # btn_calc = ttk.Button(calc_frame, text="Обмен", command=exchange)
 # btn_calc.grid(row=1, column=1, columnspan=2, sticky=EW, padx=10)
 #
-# # Рузльтат
-# res_frame = Frame(root)
-# res_frame.pack(expand=1, fill=BOTH, pady=5)
-# res_frame.grid_columnconfigure(1, weight=1)
+# Рузльтат
+res_frame = Frame(root)
+res_frame.pack(expand=1, fill=BOTH, pady=5)
+res_frame.grid_columnconfigure(1, weight=1)
 #
 # # USD
 # l_usd = Label(res_frame, text="USD:", font="Arial 10 bold")
